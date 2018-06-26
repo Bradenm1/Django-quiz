@@ -1,0 +1,48 @@
+{% for field in form %}
+    <div class="form-group">
+        <small id="dateStartTextHelp" class="form-text text-muted">{{ field.errors }}</small>
+        <label for="{{ field.name }}">{{ field.label_tag }}</label>
+        {% if "startDate" in field.name %}
+            <br><input type="date" aria-describedby="{{ field.name }}TextHelp" name="{{ field.name }}" id="id_{{ field.name }}" min="{{ minDate }}" onchange="changeDate()" required>
+        {% else %}
+            {% if "endDate" in field.name %}
+                <br><input type="date" aria-describedby="{{ field.name }}TextHelp" name="{{ field.name }}" id="id_{{ field.name }}" min="{{ minDate }}" required>
+            {% else %}
+                <div> {{ field }} </div>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endfor %}
+<script>
+        function changeDate() {
+            // When the the date changes both the dates
+            startDate = document.getElementById("id_startDate");
+            endDate = document.getElementById("id_endDate");
+
+            endDate.min = startDate.value
+        }
+
+        function addBootStrap() {
+            // Add bootstrap styling to the form
+            items = document.getElementsByTagName("input");
+            selects = document.getElementsByTagName("select");
+
+            // Add it to the inputs
+            for(var i = 0; i < items.length; i++){
+                if (items[i].type != "checkbox") {
+                    items[i].classList.add('form-control');
+                }
+            }
+            
+            // Add it to the selects
+            for(var i = 0; i < selects.length; i++) {
+                selects[i].classList.add('form-control');
+            }
+        }
+        
+        // Add bootstrap by default on page load
+        addBootStrap()
+    </script>
+
+<!-- Why I made disions
+How they went -->

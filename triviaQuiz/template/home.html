@@ -1,0 +1,83 @@
+<!-- the base html -->
+{% extends 'base.html' %}
+
+<!-- The title of the page -->
+{% block title %}Home | {{block.super}}{% endblock %}
+
+{% block content %}
+  {% include "nav-bar.html" %}
+    <div class="jumbotron">
+        <h1 style="text-align: center;">Dashboard:</h1>
+        <div class="row">
+          <div class="col-sm">
+              <h3>Progress:</h3>
+              <small class="form-text text-muted">Completetion of each active tournament</small>
+              {% for progressValue, tournament in active_tournaments_session %}
+                <h4>{{ tournament.name }} Progress:</h4>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{ progressValue }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="form-text text-muted">Completetion of a {{ tournament.name }} tournament</small>
+              {% endfor %}
+          </div>
+          <div class="col-sm">
+              <h3>Current:</h3>
+              <small class="form-text text-muted">Current do-able quizes, select an option</small>
+              <div class="list-group">
+                {% for tournament in active_tournaments %}
+                  <a href="{{ tournament.get_absolute_url }}" class="list-group-item list-group-item-action">{{ tournament }}</a>
+                {% endfor %}
+              </div>
+          </div>
+          <div class="col-sm">
+              <h3>Upcoming:</h3>
+              <small class="form-text text-muted">Tournaments soon to be active</small>
+              {% for item in future_tournaments %}
+              <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">{{ item }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm">
+                <h3>Your Stats:</h3>
+                <small class="form-text text-muted">Your overall stats</small>
+                <p>Total Correct Answers: {{ total_correct }}</p>
+                <p>Total Participated Tournaments: {{ total_participated }}</p>
+                <p>Total Missed Tournaments: {{ total_missed }}</p>
+            </div>
+            <div class="col-sm">
+                <h3>Completed:</h3>
+                <small class="form-text text-muted">All tournaments you have completed (Includes ones you started but never finished)</small>
+                <div class="list-group">
+                    {% for tournament in comepeted_tournaments %}
+                      <a href="{{ tournament.get_absolute_url }}" class="list-group-item list-group-item-action text-success">{{ tournament }}</a>
+                    {% endfor %}
+                  </div>
+            </div>
+            <div class="col-sm">
+                <h3>Missed:</h3>
+                <small class="form-text text-muted">Tournaments you missed</small>
+                <div class="list-group">
+                    {% for tournament in missed_tournaments %}
+                      <a href="javascript:void(0)" class="list-group-item list-group-item-action text-danger">{{ tournament }}</a>
+                    {% endfor %}
+                  </div>
+            </div>
+          </div>
+          {% if request.user.is_staff %}
+          <div class="row">
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                  <h3>In-active:</h3>
+                  <small class="form-text text-muted">All in-active tournaments (Only admins can see this)</small>
+                  <div class="list-group">
+                    {% for tournament in in_active %}
+                      <a href="{{ tournament.get_absolute_url }}" class="list-group-item list-group-item-action text-warning">{{ tournament }}</a>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+          {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="{% url 'triviaQuiz:home_page' %}">Trivia Quiz</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'triviaQuiz:home_page' %}">Home<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'triviaQuiz:highscores' %}">High Scores</a>
+        </li>
+        {% if request.user.is_staff %}
+        <li class="nav-item">
+              <a class="nav-link" href="{% url 'triviaQuiz:create_tournament' %}">Create Tournament (Admin)</a>
+        </li>
+        {% endif %}
+    </ul>
+        <ul class="navbar-nav mr-right">
+          <li class="nav-item">
+            <a class="nav-link" href="JavaScript:Void(0);">Logged-in as: {{ user.username }}</a>
+          </li>
+        </ul>
+    <a href="{% url 'logout' %}"><button class="form-inline my-2 my-lg-0 btn btn-danger" type="submit">logout</button></a>
+  </div>
+</nav>

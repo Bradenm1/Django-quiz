@@ -1,0 +1,36 @@
+<!-- the base html -->
+{% extends 'base.html' %}
+
+<!-- The title of the page -->
+{% block title %}{{ tournament }} | {{block.super}}{% endblock %}
+
+{% block content %}
+    {% include "nav-bar.html" %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Tournament - {{ tournament.name }}:</h1>
+            <h3>Start Date: {{ tournament.startDate }}</h3>
+            <h3>End Date: {{ tournament.endDate }}</h3>
+            <h2>Questions:</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Difficulty</th>
+                    <th scope="col">Question</th>
+                    <th scope="col">Correct Answer</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for item in questions %}
+                    <tr class="table-dark">
+                        {% for field in item %}
+                            <td>{{ field }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

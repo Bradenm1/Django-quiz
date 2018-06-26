@@ -1,0 +1,46 @@
+<!-- the base html -->
+{% extends 'base.html' %}
+
+<!-- The title of the page -->
+{% block title %}High Scores | {{block.super}}{% endblock %}
+
+{% block content %}
+    {% include "nav-bar.html" %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1 style="text-align: center;">High Scores:</h1>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Tournament</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Score</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for value in high_scores %}
+                <tr>
+                    <td>{{ value.tournament }}</td>
+                    <td>{{ value.user }}</td>
+                    <td>{{ value.result }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination">
+                <span class="step-links">
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ paginator.num_pages }}
+                    </span>
+                    <br>
+                    {% if page_obj.has_previous %}
+                        <a class="btn btn-primary" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

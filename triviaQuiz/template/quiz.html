@@ -1,0 +1,35 @@
+<!-- the base html -->
+{% extends 'base.html' %}
+
+<!-- The title of the page -->
+{% block title %}{{ tournament }} | {{block.super}}{% endblock %}
+
+{% block content %}
+    {% include "nav-bar.html" %}
+    <div class="container">
+        <div class="jumbotron">
+            <h3>{{ quesiton|safe }}</h3>
+            <div class="list-group">
+            {% for item in options %}
+                <a href="javascript:void(0)" class="list-group-item list-group-item-action" onclick="selectedItem(this)" value="{{ item.id }}">{{ item.option|safe }}</a>
+            {% endfor %}
+            </div>
+            <br>
+            <form action="{% url 'triviaQuiz:quiz' tournament.slug %}" method="POST">
+            {% csrf_token %}
+                <input type="hidden" id="hiddenInput" name="selectOption" value="null">
+                <button class="btn btn-primary" type="submit">Check Answer</button>
+            </form>
+            <script>
+                function selectedItem(selectedItem) {
+                    // Get the selected option and set that for the hidden input
+                    var hiddenInput = document.getElementById('hiddenInput');
+                    hiddenInput.setAttribute('value', selectedItem.getAttribute('value'));
+                }
+            </script>
+        </div>
+        <div class="jumbotron">
+            {% include "tournament_admin_tools.html" %}
+        </div>
+    </div>
+{% endblock %}

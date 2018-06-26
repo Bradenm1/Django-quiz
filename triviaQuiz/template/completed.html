@@ -1,0 +1,15 @@
+<!-- the base html -->
+{% extends 'base.html' %}
+
+<!-- The title of the page -->
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% include "nav-bar.html" %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1 style="text-align: center;">You have completed this tournament</h1>
+            <h2 style="text-align: center;">You got {{ score }} of 10 questions correct</h2>
+        </div>
+    </div>
+{% endblock %}

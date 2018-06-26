@@ -1,0 +1,33 @@
+{% if request.user.is_staff %}
+    <div class="row">
+        <div class="col-sm-5"></div>
+        <div class="col-sm-4">
+            <h2>Admin Tools:</h2>
+            <form action="{% url 'triviaQuiz:activate_or_deactivate_Tournament' %}" method="POST">
+            {% csrf_token %}
+                <input type="hidden" id="hiddenInput" name="tournament_id" value="{{ tournament.slug }}">
+                {% if tournament.active %}
+                    <button type="submit" class="btn btn-success">Deactive Tournament</button>
+                {% else %}
+                    <button type="submit" class="btn btn-success">Active Tournament</button>
+                {% endif %}
+            </form>
+            <!--<form action="{% url 'triviaQuiz:show_tournament_questions' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="hiddenInput" name="tournament_id" value="{{ tournament.slug }}">
+                <button type="submit" class="btn btn-success">Show Tournament Questions</button>
+            </form>-->
+            <br>
+            <form action="{% url 'triviaQuiz:deleteTournament' %}" method="POST">
+            {% csrf_token %}
+                <input type="hidden" id="hiddenInput" name="tournament_id" value="{{ tournament.slug }}">
+                <button type="submit" class="btn btn-danger">Delete Tournament</button>
+            </form>
+            <form action="{% url 'triviaQuiz:reset_Session' %}" method="POST">
+            {% csrf_token %}
+                <input type="hidden" id="hiddenInput" name="tournament_id" value="{{ tournament.slug }}">
+                <button type="submit" class="btn btn-danger">Reset Session and Score</button>
+            </form>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,17 @@
+<!-- the base html -->
+{% extends 'base.html' %}
+
+<!-- The title of the page -->
+{% block title %}{{ tournament }} | {{block.super}}{% endblock %}
+
+{% block content %}
+    {% include "nav-bar.html" %}
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-danger" style="text-align: center;">{{ message }}</h1>
+        </div>
+        <div class="jumbotron">
+            {% include "tournament_admin_tools.html" %}
+        </div>
+    </div>
+{% endblock %}
